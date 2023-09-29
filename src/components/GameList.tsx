@@ -1,16 +1,6 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
-import {
-  Card,
-  Box,
-  HStack,
-  Image,
-  SimpleGrid,
-  CardBody,
-  Stack,
-  Heading,
-  Text,
-} from "@chakra-ui/react";
+import { Card, Image, CardBody, Text } from "@chakra-ui/react";
 
 interface Game {
   id: number;
@@ -33,24 +23,21 @@ const GameList = () => {
 
   return (
     <>
-      <SimpleGrid columns={4} padding="10px" spacing={5} paddingTop={100}>
-        <Card>
-          {games.map((game) => (
-            <>
-              <Image
-                borderRadius="10"
-                boxSize="300px"
-                overflow="hidden"
-                src={game.background_image}
-              />
-              <Stack mt="6" spacing="3"></Stack>
-              <Text color="blue.600" fontSize="2xl">
-                {game.name}
-              </Text>
-            </>
-          ))}
-        </Card>
-      </SimpleGrid>
+      {games.map((game) => (
+        <>
+          <Card key={game.id}>
+            <Image
+              borderRadius="10"
+              boxSize="300px"
+              overflow="hidden"
+              src={game.background_image}
+            />
+            <CardBody>
+              <Text color="blue.600">{game.name}</Text>
+            </CardBody>
+          </Card>
+        </>
+      ))}
     </>
   );
 };
