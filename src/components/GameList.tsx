@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
-import { Card, Image, CardBody, Text } from "@chakra-ui/react";
 
 interface Game {
   id: number;
@@ -17,29 +16,21 @@ const GameList = () => {
 
   useEffect(() => {
     apiClient
-      .get<FetchGamesResponse>("games")
+      .get<FetchGamesResponse>("/games")
       .then((res) => setGames(res.data.results));
   });
 
   return (
-    <>
+    <ul>
       {games.map((game) => (
         <>
-          <Card key={game.id}>
-            <Image
-              borderRadius="10"
-              boxSize="300px"
-              overflow="hidden"
-              src={game.background_image}
-            />
-            <CardBody>
-              <Text color="blue.600">{game.name}</Text>
-            </CardBody>
-          </Card>
+          <li key={game.id}>
+            <img src={game.background_image} />
+          </li>
+          <li>{game.name}</li>
         </>
       ))}
-    </>
+    </ul>
   );
 };
-
 export default GameList;
