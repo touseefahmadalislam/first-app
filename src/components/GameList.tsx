@@ -13,6 +13,7 @@ interface FetchGamesResponse {
 
 const GameList = () => {
   const [games, setGames] = useState<Game[]>([]);
+  const [filter, setFilter] = useState<Game["name"]>();
 
   useEffect(() => {
     apiClient
@@ -21,16 +22,36 @@ const GameList = () => {
   });
 
   return (
-    <ul>
-      {games.map((game) => (
-        <>
-          <li key={game.id}>
-            <img src={game.background_image} />
-          </li>
-          <li>{game.name}</li>
-        </>
-      ))}
-    </ul>
+    <>
+      <div>
+        <input
+          id="filter"
+          name="filter"
+          type="text"
+          value={filter}
+          onChange={(event) => setFilter(event.target.value)}
+        />
+      </div>
+      <div>
+        <ul>
+          {games
+            .filter((f) => f.name.includes(filter as string) || filter === "")
+            .map((game) => (
+              <>
+                <li key={game.id}>
+                  <img
+                    src={game.background_image}
+                    alt=""
+                    height="300px"
+                    width="300px"
+                  />
+                </li>
+                <li>{game.name}</li>
+              </>
+            ))}
+        </ul>
+      </div>
+    </>
   );
 };
 export default GameList;
