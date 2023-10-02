@@ -13,7 +13,7 @@ interface FetchGamesResponse {
 
 const GameList = () => {
   const [games, setGames] = useState<Game[]>([]);
-  const [filter, setFilter] = useState<Game["name"]>();
+  const [filter = "", setFilter] = useState<Game["name"]>();
 
   useEffect(() => {
     apiClient
@@ -35,7 +35,12 @@ const GameList = () => {
       <div>
         <ul>
           {games
-            .filter((f) => f.name.includes(filter as string) || filter === "")
+            .filter(
+              (f) =>
+                f.name
+                  .toLowerCase()
+                  .includes(filter?.toLowerCase() as string) || filter === ""
+            )
             .map((game) => (
               <>
                 <li key={game.id}>
